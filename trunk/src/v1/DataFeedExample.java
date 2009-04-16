@@ -94,7 +94,7 @@ public class DataFeedExample {
     outputFeedData(feed);
     outputFeedDataSources(feed);
     outputFeedAggregates(feed);
-    outputFeedData(feed);
+    outputEntryRowData(feed);
 
     String tableData = DataFeedExample.getFeedTable(feed);
     System.out.println(tableData);
