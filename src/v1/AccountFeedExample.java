@@ -90,9 +90,8 @@ public class AccountFeedExample {
         "\nWeb Property Id = " + entry.getProperty("ga:webPropertyId") +
         "\nAccount Name    = " + entry.getProperty("ga:accountName") +
         "\nAccount Id      = " + entry.getProperty("ga:accountId") +
-        "\nProfile Id      = " + entry.getProperty("ga:profileId") +
         "\nProfile Name    = " + entry.getTitle().getPlainText() +
-        "\nEntry Id        = " + entry.getId() +
+        "\nProfile Id      = " + entry.getProperty("ga:profileId") +
         "\nTable Id        = " + entry.getTableId().getValue());
     }
   }
