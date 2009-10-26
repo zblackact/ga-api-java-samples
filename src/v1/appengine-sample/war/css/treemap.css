@@ -1,0 +1,140 @@
+body {
+  background-color: #f0f0ff;
+  font-family: Helvetica, arial;
+  margin: auto;
+  width: 1000px;
+}
+
+/* intro text */
+.small-text {
+  font-size: 12px;
+  line-height: 125%;
+}
+
+.intro {
+  border-top: solid 1px #666666;
+  border-bottom: solid 1px #666666;
+  padding-top: 5px;
+}
+
+.intro > p {
+  margin-bottom: 10px;
+}
+
+#treeHelp {
+  overflow: hidden;
+  margin: 15px 0 10px 0;
+}
+
+#controls {
+  float: left;
+  width: 557px;
+}
+
+#instructions {
+  border-left:1px solid #ccc;
+  float:left;
+  margin: 0 0 0 10px;
+  padding-left: 30px;
+  width:350px;
+}
+
+#instructions > li {
+  list-style-type: none;
+}
+
+.green {
+  color: green;
+  font-weight: bold;
+}
+
+.red {
+  color: red;
+  font-weight: bold;
+}
+
+/* treemap controls */
+#controls > ul {
+  margin: 5px 0 0 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+#controls > * {
+  display: block;
+}
+
+#controls li {
+  float:left;
+  list-style-type: none;
+}
+
+.c-c1 {
+  width: 190px;
+}
+
+.c-radio {
+  font-size: smaller;
+  width: 50px;
+}
+
+#sliderVal {
+  padding-left: 5px;
+  width: 90px;
+}
+
+#slider {
+  margin-top: 3px;
+  width: 250px;
+}
+
+#showTitles {
+  margin-bottom: 5px;
+}
+
+/* tooltip div */
+#tooltip {
+  border: solid #999 2px;
+  background-color: #f0f0ff;
+  display: none;
+  height: 75px;
+  padding: 4px;
+  position: absolute;
+  width: 380px;
+  z-index: 100;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+}
+
+/* data in the tool tip */
+#tooltip #tt-title {
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  margin: 6px auto;
+}
+
+#tooltip ul {
+  margin: auto;
+  padding: 0;
+  width: 160px;
+}
+
+#tooltip li {
+  list-style-type: none;
+  font-size: 12px;
+  overflow: hidden;
+}
+
+#tooltip ul div {
+  float:left;
+}
+
+.tt-c1 {
+  text-align: left;
+  width: 100px;
+}
+
+#tt-br {
+  font-weight: bold;
+}
