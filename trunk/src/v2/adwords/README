@@ -1,0 +1,51 @@
+
+The example uses Java wrapper libraries for both the Analytics Export API and 
+AdWords API. Information on finding and installing these libraries can be found 
+on Google Code, at the addresses listed below.
+
+There are three things you need to configure in order to get this example running.
+
+
+1) ANALYTICS API SETUP
+- You need to download the Google Analytics Java client library, and reference the 
+  appropriate JAR files in your class path.
+
+Detailed instructions can be found here:
+http://code.google.com/apis/analytics/docs/gdata/2.0/gdataJava.html
+
+Google Data Java client library download:
+http://code.google.com/p/gdata-java-client/
+
+In order for the code to run, you'll need to edit a few lines in the sample code to 
+include your username, password, and profileID.  The lines will look like:
+  private static final String USERNAME = "INSERT_GA_USERNAME_HERE";
+  private static final String PASSWORD = "INSERT_GA_PASSWORD_HERE";
+  private static final String PROFILE_ID = "INSERT_GA_PROFILEID_HERE";
+
+2) ADWORDS SETUP
+- You need to have signed up for API access to your AdWords account, and have an 
+  associated Developer Token. If you haven't done this yet, information on how to get 
+  started can be found at: 
+  https://adwords.google.com/support/aw/adwordsapi/bin/answer.py?hl=en&answer=15104
+
+- You need to have your Google Analytics and Google AdWords accounts linked and have 
+  autotagging enabled.
+
+- You need to download the Google AdWords Java client library, and reference the 
+  appropriate JAR files in your class path.
+
+Detailed instructions can be found in the AdWords API Java Client Library Readme:
+http://code.google.com/p/google-api-adwords-java/wiki/Readme
+
+AdWords API Java Client Library can be found here:
+http://code.google.com/p/google-api-adwords-java/
+
+3) ADWORDS AUTH VIA "adwords.properties"
+This sample uses the "adwords.properties" authentication method described in the 
+"Basic Usage" section of the Readme page linked above.
+
+This file should be found in the following location, depending on your environment:
+OSX / *NIX: ~/adwords.properties
+Windows XP: c:\documents and settings\USERNAME\adwords.properties
+Windows Vista/7:  c:\users\USERNAME\
+
