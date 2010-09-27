@@ -18,7 +18,9 @@ package example;
 import com.google.gdata.client.analytics.DataQuery;
 import com.google.gdata.util.common.base.CharEscapers;
 
+import java.text.CharacterIterator;
 import java.text.MessageFormat;
+import java.text.StringCharacterIterator;
 
 /**
  * Provides a container to store filter expressions as well a filter's
@@ -40,57 +42,89 @@ public class Filter implements Comparable<Filter> {
   private int encodedSize;
 
   /**
-   * Constructor.
-   * Creates a new Filter object. The dimension name and value are used
-   * to create and set an equality filter expression, (ga:source==foo).
-   * Finally the encoded length of this expression is set.
+   * Sets an equality expression in the filter.
+   * The dimension name and value are stored in the filter, the
+   * expression and encoded length is also stored.
    * @param dimensionName The dimension name for this filter.
    * @param dimensionValue The dimension value for this filter.
    */
-  public Filter(String dimensionName, String dimensionValue) {
+  public void setEqualityFilterExpression(String dimensionName, String dimensionValue) {
     this.dimensionName = dimensionName;
     this.dimensionValue = dimensionValue;
-    filterExpression = getEqualityFilter(dimensionName, dimensionValue);
-    setEncodedSize(filterExpression);
+    this.filterExpression = getEqualityFilter(dimensionName, dimensionValue);
+    this.encodedSize = getEncodedSize(filterExpression);
   }
 
   /**
-   * Sets the size of each filter to the encoded length filter expression.
-   * @param filterExpression The filter expression whose size we are setting.
+   * Returns an equality expression for a dimension name and dimension value.
+   * (e.g. ga:source==google). This also escapes the reserved filter
+   * characters.
+   * @param dimensionName The dimension name.
+   * @param dimensionValue The dimension value.
+   * @return An equality filter expression.
    */
-  public void setEncodedSize(String filterExpression) {
-    encodedSize = CharEscapers.uriEscaper().escape(filterExpression).length();
+  public static String getEqualityFilter(String dimensionName, String dimensionValue) {
+    return MessageFormat.format("{0}=={1}", dimensionName, escapeValue(dimensionValue));
   }
 
   /**
-   * Returns the URI encoded size of the filter + 1 to account for commas.
+   * Returns a backslash-escaped version of the dimension value. A backslash
+   * is prepended to all commas, semicolons and backslashes.
+   * @param value The filter value to escape.
+   * @return The backslash-escaped value.
+   */
+  public static String escapeValue(String value) {
+    final StringBuilder result = new StringBuilder();
+    final StringCharacterIterator iterator = new StringCharacterIterator(value);
+    char character =  iterator.current();
+    while (character != CharacterIterator.DONE ) {
+      if (character == ',' || character == ';' || character == '\\') {
+        result.append("\\");
+      }
+      result.append(character);
+      character = iterator.next();
+    }
+    return result.toString();
+  }
+
+  /**
+   * Returns the encoded length of the filter expression.
+   * @param filterExpression The filter expression whose size we are setting.
+   * @return The encoded length of the filter expression.
+   */
+  public int getEncodedSize(String filterExpression) {
+    return CharEscapers.uriEscaper().escape(filterExpression).length();
+  }
+
+  /**
+   * @return The URI encoded size of the filter.
    */
   public int getEncodedSize() {
     return encodedSize;
   }
   /**
-   * Returns the dimension name.
+   * @return The dimension name.
    */
   public String getName() {
     return dimensionName;
   }
 
   /**
-   * Returns the dimension value.
+   * @return The dimension value.
    */
   public String getValue() {
     return dimensionValue;
   }
 
   /**
-   * Returns the filter expression.
+   * @return The filter expression.
    */
   public String getFilterExpression() {
     return filterExpression;
   }
 
   /**
-   * Returns the filter expression as the String value for this object.
+   * @return The filter expression as the String value for this object.
    */
   public String toString() {
     return filterExpression;
@@ -156,16 +190,6 @@ public class Filter implements Comparable<Filter> {
         dataQuery.setFilters(filter + AND_OPERATOR);
       }
     }
-  }
-
-  /**
-   * Returns an equality expression for a dimension name and dimension value.
-   * @param dimensionName The dimension name.
-   * @param dimensionValue The dimension value.
-   * @return An equality filter expression.
-   */
-  public static String getEqualityFilter(String dimensionName, String dimensionValue) {
-    return MessageFormat.format("{0}=={1}", dimensionName, dimensionValue);
   }
 
   /**

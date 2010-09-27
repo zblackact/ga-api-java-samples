@@ -67,14 +67,20 @@ public class TestBucketManager extends TestCase {
     dimensionValues.add(dimensionValue4);
     dimensionValues.add(dimensionValue5);
 
+    filter1 = new Filter();
+    filter2 = new Filter();
+    filter3 = new Filter();
+    filter4 = new Filter();
+    filter5 = new Filter();
+
     // The numbers represent the encoded size of each value.
     // This helps in determining what the expected output of
     // the tests below.
-    filter1 = new Filter(dimensionName, dimensionValue1); // 40.
-    filter2 = new Filter(dimensionName, dimensionValue2); // 35.
-    filter3 = new Filter(dimensionName, dimensionValue3); // 30.
-    filter4 = new Filter(dimensionName, dimensionValue4); // 25.
-    filter5 = new Filter(dimensionName, dimensionValue5); // 20.
+    filter1.setEqualityFilterExpression(dimensionName, dimensionValue1); // 40.
+    filter2.setEqualityFilterExpression(dimensionName, dimensionValue2); // 35.
+    filter3.setEqualityFilterExpression(dimensionName, dimensionValue3); // 30.
+    filter4.setEqualityFilterExpression(dimensionName, dimensionValue4); // 25.
+    filter5.setEqualityFilterExpression(dimensionName, dimensionValue5); // 20.
   }
 
   /**

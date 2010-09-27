@@ -64,7 +64,8 @@ public class BucketManager {
 
     List<Filter> filters = new ArrayList<Filter>(dimensionValues.size());
     for (String dimensionValue : dimensionValues) {
-      Filter filter = new Filter(dimensionName, dimensionValue);
+      Filter filter = new Filter();
+      filter.setEqualityFilterExpression(dimensionName, dimensionValue);
       if (filter.getEncodedSize() <= filterMaxCharLength) {
         filters.add(filter);
       }

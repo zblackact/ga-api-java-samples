@@ -30,57 +30,66 @@ import java.text.MessageFormat;
 public class TestFilter extends TestCase {
 
   /**
-   * Tests constructor.
+   * Tests setting the equality filter expression.
    */
-  public void testFilter() {
-    String dimensionName = "ga:source";
-    String dimensionValue = "google";
+  public void testSetEqualityFilterExpression() {
+    String dimensionName = "ga:pageTitle";
+    String dimensionValue = "bad,title\\withchars;";
 
-    Filter filter = new Filter(dimensionName, dimensionValue);
-    assertNotNull(filter);
-    assertTrue(0 < filter.getEncodedSize());
+    String filterExpression = MessageFormat.format("{0}=={1}", dimensionName,
+        Filter.escapeValue(dimensionValue));
+    int encodedSize = CharEscapers.uriEscaper().escape(filterExpression).length();;
 
-    String result = Filter.getEqualityFilter(dimensionName, dimensionValue);
+    Filter filter = new Filter();
+    filter.setEqualityFilterExpression(dimensionName, dimensionValue);
 
-    assertTrue(filter.toString().equals(result));
-    assertTrue(dimensionName.equals(filter.getName()));
-    assertTrue(dimensionValue.equals(filter.getValue()));
+    assertEquals(dimensionName, filter.getName());
+    assertEquals(dimensionValue, filter.getValue());
+    assertEquals(filterExpression, filter.getFilterExpression());
+    assertEquals(encodedSize, filter.getEncodedSize());
   }
 
   /**
    * Tests retrieving an equality filter.
    */
-  public void testGetEqualityFilterExpression() {
-    String dimensionName = "ga:source";
-    String dimensionValue = "google";
+  public void testGetEqualityFilter() {
+    String dimensionName = "ga:pageTitle";
+    String dimensionValue = "bad,title\\withchars;";
+    String expectedExpression = MessageFormat.format("{0}=={1}", dimensionName,
+        Filter.escapeValue(dimensionValue));
 
-    String expectedExpression = MessageFormat.format("{0}=={1}", dimensionName, dimensionValue);
-    String result = Filter.getEqualityFilter(dimensionName, dimensionValue);
-
-    assertTrue(expectedExpression.equals(result));
+    String filterExpression = Filter.getEqualityFilter(dimensionName, dimensionValue);
+    assertEquals(expectedExpression, filterExpression);
   }
 
   /**
-   * Tests setting the size of the filter.
+   * Tests properly escapes expression values.
    */
-  public void testSetSize() {
+  public void testEscapeValue() {
+    String expression = "aaa,bbb;ccc\\ddd";
+    String expectedExpression = "aaa\\,bbb\\;ccc\\\\ddd";
+    assertEquals(expectedExpression, Filter.escapeValue(expression));
+  }
 
-    String expression = "ga:source==google";
-    Filter filter = new Filter("", "");
-    filter.setEncodedSize(expression);
+  /**
+   * Tests getting the encoded size of the filter.
+   */
+  public void testGetEncodedSize() {
+    String filterExpression = "ga:source==google";
+    int encodedSize = CharEscapers.uriEscaper().escape(filterExpression).length();
 
-    String escapedExpression = CharEscapers.uriEscaper().escape(expression);
-    int expectedLength = escapedExpression.length();
-    int result = filter.getEncodedSize();
-    assertEquals(expectedLength, result);
+    Filter filter = new Filter();
+    assertEquals(encodedSize, filter.getEncodedSize(filterExpression));
   }
 
   /**
    * Tests compareTo implementation.
    */
   public void testComapreTo() {
-    Filter filterSm = new Filter("a", "b");
-    Filter filterLg = new Filter("aaa", "bbb");
+    Filter filterSm = new Filter();
+    filterSm.setEqualityFilterExpression("ga:source", "google");
+    Filter filterLg = new Filter();
+    filterLg.setEqualityFilterExpression("ga:landingPagePath", "/product/toys");
 
     assertEquals(1, filterSm.compareTo(filterLg));
     assertEquals(-1, filterLg.compareTo(filterSm));
@@ -91,9 +100,12 @@ public class TestFilter extends TestCase {
    * Test equals implementation.
    */
   public void testEquals() {
-    Filter one = new Filter("a", "a");
-    Filter two = new Filter("a", "a");
-    Filter three = new Filter("b", "b");
+    Filter one = new Filter();
+    one.setEqualityFilterExpression("ga:keyword", "pretzel");
+    Filter two = new Filter();
+    two.setEqualityFilterExpression("ga:keyword", "pretzel");
+    Filter three = new Filter();
+    three.setEqualityFilterExpression("ga:keyword", "sandwich");
 
     assertTrue(one.equals(one));
     assertTrue(one.equals(two));
