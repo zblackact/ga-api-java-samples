@@ -30,7 +30,8 @@ public class TestBucket extends TestCase {
    * Create a test filter.
    */
   public void setUp() {
-    filter = new Filter("ga:source", "google");
+    filter = new Filter();
+    filter.setEqualityFilterExpression("ga:source", "google");
   }
 
   /**
@@ -130,9 +131,13 @@ public class TestBucket extends TestCase {
    * Tests the equals implementation.
    */
   public void testEquals() {
-    Filter filter1 = new Filter("a", "b");
-    Filter filter2 = new Filter("c", "d");
-    Filter filter3 = new Filter("e", "f");
+    Filter filter1 = new Filter();
+    Filter filter2 = new Filter();
+    Filter filter3 = new Filter();
+
+    filter1.setEqualityFilterExpression("ga:city", "paris");
+    filter2.setEqualityFilterExpression("ga:city", "san francisco");
+    filter3.setEqualityFilterExpression("ga:city", "new york");
 
     Bucket bucket1 = new Bucket(10000, 10000);
     bucket1.getFilterList().add(filter1);
