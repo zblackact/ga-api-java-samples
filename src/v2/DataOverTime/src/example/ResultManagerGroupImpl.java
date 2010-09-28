@@ -71,7 +71,7 @@ public class ResultManagerGroupImpl implements ResultManager {
     String expectedDate = "";
     String dimensionValue = "";
     boolean isSampled = false;
-    List<Integer> row = null;
+    List<Double> row = null;
     int numCols = results.getNumCols();
 
     for (DataEntry entry : feed.getEntries()) {
@@ -82,7 +82,7 @@ public class ResultManagerGroupImpl implements ResultManager {
           forwardFillRow(numCols, row);
           results.addRow(dimensionValue, row);  // Add the row.
         }
-        row = new ArrayList<Integer>(numCols);  // Create a new row.
+        row = new ArrayList<Double>(numCols);  // Create a new row.
         dimensionValue = tmpDimValue;
         expectedDate = startDate;
       }
@@ -97,7 +97,7 @@ public class ResultManagerGroupImpl implements ResultManager {
       if (!isSampled && 0 != metric.getConfidenceInterval()) {
         isSampled = true;
       }
-      row.add(new Integer(metric.getValue()));
+      row.add(new Double(metric.getValue()));
       expectedDate = getNextDate(foundDate);
     }
 
@@ -117,7 +117,7 @@ public class ResultManagerGroupImpl implements ResultManager {
    * @param endDate The found date.
    * @param row The current row being added to the table.
    */
-  public void backFillRow(String startDate, String endDate, List<Integer> row) {
+  public void backFillRow(String startDate, String endDate, List<Double> row) {
     long d1 = 0;
     long d2 = 0;
 
@@ -135,7 +135,7 @@ public class ResultManagerGroupImpl implements ResultManager {
     long differenceInDays = d2 - d1;
     if (differenceInDays > 0) {
       for (int i = 0; i < differenceInDays; i++) {
-        row.add(0);
+        row.add(0.0);
       }
     }
   }
@@ -163,7 +163,7 @@ public class ResultManagerGroupImpl implements ResultManager {
    * @param rowSize The expected size of the row List.
    * @param row The row to add 0 values to. Must not be null.
    */
-  public void forwardFillRow(int rowSize, List<Integer> row) {
+  public void forwardFillRow(int rowSize, List<Double> row) {
     if (rowSize < 0 || row == null) {
       return;
     }
@@ -171,7 +171,7 @@ public class ResultManagerGroupImpl implements ResultManager {
     int remainingElements = rowSize - row.size();
     if (remainingElements > 0) {
       for (int i = 0; i < remainingElements; i++) {
-        row.add(0);
+        row.add(0.0);
       }
     }
   }

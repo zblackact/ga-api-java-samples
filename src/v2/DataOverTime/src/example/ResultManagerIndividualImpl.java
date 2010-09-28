@@ -51,7 +51,7 @@ public class ResultManagerIndividualImpl implements ResultManager {
    */
   @Override
   public void addRows(DataFeed feed) {
-    List<Integer> row = new ArrayList<Integer>(results.getNumRows());
+    List<Double> row = new ArrayList<Double>(results.getNumRows());
     Metric metric;
     boolean isSampled = false;
 
@@ -60,7 +60,7 @@ public class ResultManagerIndividualImpl implements ResultManager {
       if (!isSampled && 0 != metric.getConfidenceInterval()) {
         isSampled = true;
       }
-      row.add(new Integer(metric.getValue()));
+      row.add(new Double(metric.getValue()));
     }
     results.addRow(row);
     results.setIsSampled(isSampled);
