@@ -37,7 +37,7 @@ public class Results {
 
   private List<String> rowNames;
   private List<String> originalDimensionValues;
-  private List<List<Integer>> table;
+  private List<List<Double>> table;
   private List<String> colNames;
   private String dimensionName = "";
   private boolean isSampled;
@@ -50,7 +50,7 @@ public class Results {
    *     dataQuery parameter.
    */
   public void initTable(DataQuery dataQuery, List<String> dimensionValues) {
-    table = new ArrayList<List<Integer>>(dimensionValues.size());
+    table = new ArrayList<List<Double>>(dimensionValues.size());
     originalDimensionValues = dimensionValues;
     rowNames = new ArrayList<String>(dimensionValues.size());
     dimensionName = dataQuery.getDimensions();
@@ -88,7 +88,7 @@ public class Results {
    */
   public void outputCsv(PrintStream output) {
 
-    Integer total = 0;
+    Double total = 0.0;
 
     // Print sampled disclaimer.
     if (isSampled) {
@@ -106,15 +106,15 @@ public class Results {
     for (int i = 0; i<table.size(); i++) {
       output.print(rowNames.get(i));
 
-      List<Integer> row = table.get(i);
-      Iterator<Integer> valueIter = row.iterator();
+      List<Double> row = table.get(i);
+      Iterator<Double> valueIter = row.iterator();
       while (valueIter.hasNext()) {
-        Integer intValue = valueIter.next();
+        Double intValue = valueIter.next();
         total += intValue;
         output.print(MessageFormat.format(",{0}", intValue.toString()));
       }
       output.print(MessageFormat.format(",{0}\n", total.toString()));
-      total = 0;
+      total = 0.0;
     }
   }
 
@@ -123,7 +123,7 @@ public class Results {
    * @param rowName The name of a row.
    * @param row A list of Integers representing each value.
    */
-  public void addRow(String rowName, List<Integer> row) {
+  public void addRow(String rowName, List<Double> row) {
     rowNames.add(rowName);
     table.add(row);
   }
@@ -133,7 +133,7 @@ public class Results {
    * as the row name.
    * @param row A list of Integers representing each value.
    */
-  public void addRow(List<Integer> row) {
+  public void addRow(List<Double> row) {
     table.add(row);
     rowNames.add(originalDimensionValues.get(table.size()));
   }
@@ -141,7 +141,7 @@ public class Results {
   /**
    * @return The table.
    */
-  public List<List<Integer>> getTable() {
+  public List<List<Double>> getTable() {
     return table;
   }
 
@@ -149,7 +149,7 @@ public class Results {
    * Sets the table.
    * @param table The table to set.
    */
-  public void setTable(List<List<Integer>> table) {
+  public void setTable(List<List<Double>> table) {
     this.table = table;
   }
 

@@ -69,9 +69,9 @@ public class TestResultManagerIndividualImpl extends TestCase {
     resultManager.setResults(results);
     resultManager.addRows(testFeed);
 
-    List<List<Integer>> table = results.getTable();
+    List<List<Double>> table = results.getTable();
     for (int i = 0; i < table.get(0).size(); i++) {
-      Integer value = new Integer(testMetrics[0][i]);
+      Double value = new Double(testMetrics[0][i]);
       assertEquals(value, table.get(0).get(i));
     }
   }

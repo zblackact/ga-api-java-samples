@@ -35,7 +35,7 @@ public class TestResultManagerGroupImpl extends TestCase {
   private AnalyticsServiceMock asMock;
   private ResultManagerGroupImpl resultManager;
   private Results results;
-  private List<List<Integer>> table;
+  private List<List<Double>> table;
   private String[] dimensionNames;
 
   /**
@@ -110,10 +110,10 @@ public class TestResultManagerGroupImpl extends TestCase {
     table = results.getTable();
     assertEquals(4, table.size());
 
-    assertEquals(new Integer(1), table.get(0).get(0));
-    assertEquals(new Integer(2), table.get(1).get(0));
-    assertEquals(new Integer(3), table.get(2).get(0));
-    assertEquals(new Integer(4), table.get(3).get(0));
+    assertEquals(new Double(1), table.get(0).get(0));
+    assertEquals(new Double(2), table.get(1).get(0));
+    assertEquals(new Double(3), table.get(2).get(0));
+    assertEquals(new Double(4), table.get(3).get(0));
   }
 
   /**
@@ -139,8 +139,8 @@ public class TestResultManagerGroupImpl extends TestCase {
     assertEquals(3, table.get(0).size());
     assertEquals(3, table.get(1).size());
 
-    assertEquals(new Integer(3), table.get(0).get(2));
-    assertEquals(new Integer(4), table.get(1).get(0));
+    assertEquals(new Double(3), table.get(0).get(2));
+    assertEquals(new Double(4), table.get(1).get(0));
   }
 
   /**
@@ -162,8 +162,8 @@ public class TestResultManagerGroupImpl extends TestCase {
     table = results.getTable();
     assertEquals(2, table.size());
     assertEquals(3, table.get(0).size());
-    assertEquals(new Integer(0), table.get(0).get(0));
-    assertEquals(new Integer(0), table.get(0).get(1));
+    assertEquals(new Double(0), table.get(0).get(0));
+    assertEquals(new Double(0), table.get(0).get(1));
   }
 
   /**
@@ -185,7 +185,7 @@ public class TestResultManagerGroupImpl extends TestCase {
     table = results.getTable();
     assertEquals(2, table.size());
     assertEquals(3, table.get(0).size());
-    assertEquals(new Integer(0), table.get(0).get(1));
+    assertEquals(new Double(0), table.get(0).get(1));
   }
 
   /**
@@ -207,8 +207,8 @@ public class TestResultManagerGroupImpl extends TestCase {
     table = results.getTable();
     assertEquals(2, table.size());
     assertEquals(3, table.get(1).size());
-    assertEquals(new Integer(0), table.get(1).get(0));
-    assertEquals(new Integer(0), table.get(1).get(1));
+    assertEquals(new Double(0), table.get(1).get(0));
+    assertEquals(new Double(0), table.get(1).get(1));
   }
 
   /**
@@ -230,7 +230,7 @@ public class TestResultManagerGroupImpl extends TestCase {
     table = results.getTable();
     assertEquals(2, table.size());
     assertEquals(3, table.get(1).size());
-    assertEquals(new Integer(0), table.get(1).get(1));
+    assertEquals(new Double(0), table.get(1).get(1));
   }
 
   /**
@@ -255,8 +255,8 @@ public class TestResultManagerGroupImpl extends TestCase {
 
     int expectedSize = DataQueryUtil.getNumberOfDays(dataQuery);
     assertEquals(expectedSize, table.get(0).size());
-    assertEquals(new Integer(0), table.get(0).get(1));
-    assertEquals(new Integer(0), table.get(0).get(2));
+    assertEquals(new Double(0), table.get(0).get(1));
+    assertEquals(new Double(0), table.get(0).get(2));
   }
 
   /**
@@ -281,8 +281,8 @@ public class TestResultManagerGroupImpl extends TestCase {
 
     int expectedSize = DataQueryUtil.getNumberOfDays(dataQuery);
     assertEquals(expectedSize, table.get(1).size());
-    assertEquals(new Integer(0), table.get(1).get(1));
-    assertEquals(new Integer(0), table.get(1).get(2));
+    assertEquals(new Double(0), table.get(1).get(1));
+    assertEquals(new Double(0), table.get(1).get(2));
   }
 
   /**
@@ -308,7 +308,7 @@ public class TestResultManagerGroupImpl extends TestCase {
    * Tests that 0 values will be added between two dates.
    */
   public void testBackFillRow() {
-    List<Integer> row = new ArrayList<Integer>();
+    List<Double> row = new ArrayList<Double>();
     resultManager.backFillRow("20100101", "20100105", row);
     assertEquals(4, row.size());
 
@@ -327,7 +327,7 @@ public class TestResultManagerGroupImpl extends TestCase {
    * 20100629, 20100630, 20100701, 20100702
    */
   public void testBackFillRow_acrossDateBoundries() {
-    List<Integer> row = new ArrayList<Integer>();
+    List<Double> row = new ArrayList<Double>();
     resultManager.backFillRow("20100629", "20100702", row);
     assertEquals(3, row.size());
   }
@@ -343,17 +343,17 @@ public class TestResultManagerGroupImpl extends TestCase {
    * Tests adding a set number of values to the end of a row.
    */
   public void testForwardFillRow() {
-    List<Integer> row = null;
+    List<Double> row = null;
 
     resultManager.forwardFillRow(3, row);
     assertNull(row);
 
-    row = new ArrayList<Integer>();
+    row = new ArrayList<Double>();
     resultManager.forwardFillRow(-1, row);
     assertEquals(0, row.size());
 
     resultManager.forwardFillRow(3, row);
     assertEquals(3, row.size());
-    assertEquals(new Integer(0), row.get(2));
+    assertEquals(new Double(0), row.get(2));
   }
 }
