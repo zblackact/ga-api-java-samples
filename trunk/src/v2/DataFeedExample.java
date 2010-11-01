@@ -109,13 +109,14 @@ public class DataFeedExample {
   public void printFeedData() {
     System.out.println("\n-------- Important Feed Information --------");
     System.out.println(
-      "\nFeed Title      = " + feed.getTitle().getPlainText() +
-      "\nFeed ID         = " + feed.getId() +
-      "\nTotal Results   = " + feed.getTotalResults() +
-      "\nSart Index      = " + feed.getStartIndex() +
-      "\nItems Per Page  = " + feed.getItemsPerPage() +
-      "\nStart Date      = " + feed.getStartDate().getValue() +
-      "\nEnd Date        = " + feed.getEndDate().getValue());
+      "\nFeed Title            = " + feed.getTitle().getPlainText() +
+      "\nFeed ID               = " + feed.getId() +
+      "\nTotal Results         = " + feed.getTotalResults() +
+      "\nSart Index            = " + feed.getStartIndex() +
+      "\nItems Per Page        = " + feed.getItemsPerPage() +
+      "\nStart Date            = " + feed.getStartDate().getValue() +
+      "\nEnd Date              = " + feed.getEndDate().getValue() +
+      "\nContains Sampled Data = " + feed.getContainsSampledData().getValue().toString());
   }
 
   /**
